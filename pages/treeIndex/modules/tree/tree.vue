@@ -225,7 +225,7 @@
 				uni.navigateBack()
 			},
 			handlePath(){
-				if(!this.hasPath) return []
+				if(this.hasPath) return []
 				const map = this.topics.map(_ => {
 					const topic = Object.assign({},_)
 					delete topic[this.children]
@@ -254,13 +254,18 @@
 			handleMulSelect(item){
 				// 选中状态有全选和半选择
 				console.log('多选',item,item.checked);
-				const {checkStrictly,keyCode,handleSelectRelativeNode,handleCancelRelativeNode,children} = this
+				const {checkStrictly,keyCode,handleSelectRelativeNode,handleCancelRelativeNode,children, handlePath} = this
 				const index = this.selectData.findIndex(_ => _[keyCode] == item[keyCode])
+				// 得到路径
+				const path = handlePath(item[keyCode])
+				console.log('path',path);
 				// 不关联子级
 				if(!checkStrictly) {
 					item.checked ? this.selectData.splice(index,1) : this.selectData.push(item)
 					item.checked = !item.checked
 					item.halfChecked = false
+					// 保存路径
+					item.path = path
 					return
 				}
 				// 关联子级/取消关联子级
