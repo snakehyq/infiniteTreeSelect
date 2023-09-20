@@ -6,7 +6,7 @@
 		<button type="primary"  @tap="handleChooseTree(cprop)">单选模式（选择任意一项）</button>
 		<button type="primary" @tap="handleChooseTree(dprop)">单选模式（只选user）</button>
 		<button @tap="handleClear">清空选择</button>
-		<view v-for="(item,index) in selectData">
+		<view v-for="(item,index) in selectData" style="padding: 12px;0px;">
 			<view>名字： {{item.name}}</view>
 			<view>id： {{item.id}}</view>
 			<view v-show="item.path.length">

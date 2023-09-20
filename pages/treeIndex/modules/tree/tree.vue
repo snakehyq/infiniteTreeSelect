@@ -269,23 +269,35 @@
 					return
 				}
 				// 关联子级/取消关联子级
-				item.checked || item.halfChecked ? handleCancelRelativeNode(item) : this.selectData = this.selectData.concat(handleSelectRelativeNode(item))
+				item.checked || item.halfChecked ? handleCancelRelativeNode(item) : this.selectData = this.selectData.concat(handleSelectRelativeNode(item,path))
 				// 全选状态
 				item.checked = item.checked || item.halfChecked ? false : true
 				item.halfChecked = false
+				// 添加路径
+				item.path = path
 			},
 			// 关联子级 
-			handleSelectRelativeNode(nodes){
+			handleSelectRelativeNode(nodes, path){
 				// 已选中的状态不需要再加进来了 !nodes.checked && !nodes.halfChecked
 				let map = []
-				!nodes.checked && !nodes.halfChecked &&  map.push(nodes)
+				if(!nodes.checked && !nodes.halfChecked) {
+					map.push(nodes)
+				}
 				if(nodes[this.children] && nodes[this.children].length) {
 					for (var i = 0; i < nodes[this.children].length; i++) {
 						const node = nodes[this.children][i]
+						const pathNode = { ...nodes }
+						// 删除pathNode中的children属性
+						delete pathNode[this.children]
+						const _newNode = [...path, pathNode]
+						// 添加路径
+						node.path = _newNode
 						if(node[this.children] && node[this.children].length) {
-							map = map.concat(this.handleSelectRelativeNode(node))
+							map = map.concat(this.handleSelectRelativeNode(node, _newNode))
 						} else {
-							!nodes.checked && !nodes.halfChecked &&  map.push(node)
+							if(!nodes.checked && !nodes.halfChecked) {
+								map.push(node)
+							}
 						}
 						// 设置全选状态
 						node.checked = true
@@ -355,7 +367,6 @@
 					treeNode++
 					// 判断节点是否存在于selectData已选择的数据中，如果存在表示选中，不存在表示不选中
 					const findIndex =  this.selectData.findIndex(_ => _[this.keyCode] == child[this.keyCode])
-					console.log(child[this.keyCode],findIndex);
 					findIndex != -1 &&  treeNodeSelect++
 				}
 				return {
