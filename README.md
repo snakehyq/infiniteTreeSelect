@@ -22,3 +22,7 @@
 ## 多选-任意一项
 
 ![image-20230918170303436](https://github.com/snakehyq/infiniteTreeSelect/blob/main/static/imags/image-20230918170303436.png)
+
+## 底部弹框
+![image-20230918170303436](https://github.com/snakehyq/infiniteTreeSelect/blob/main/static/imags/image-1695286886689.png)
+
