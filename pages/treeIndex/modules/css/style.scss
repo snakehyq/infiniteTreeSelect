@@ -59,7 +59,7 @@
 		position: fixed;
 		bottom: 0;
 		left: 0;
-		padding: 12px;
+		padding: 6px 12px;
 		background-color: #ffffff;
 		display: flex;
 		width: 100%;
@@ -67,6 +67,9 @@
 		border-top: 1px solid #f5f5f5;
 		.footer-left {
 			flex: 1;
+			display: flex;
+			flex-direction: column;
+			justify-content: center;
 		}
 		.footer-right{
 			padding: 12px 30px;
@@ -78,6 +81,10 @@
 		.select {
 			font-size: 14px;
 			color: #0095F2;
+			cursor: pointer;
+		}
+		.select-row {
+			margin-left: 6px;
 		}
 		.more-select {
 			color: #a0a0a0;
