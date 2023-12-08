@@ -1,6 +1,6 @@
 <template>
 	<view>
-		<hyq-tree v-bind="prop" :tree-node="treeNode" :feed-back-list="feedBackList" is-check show-search key-code="id" @handleConfirm="handleConfirm" ></infinite-tree>
+		<hyq-tree v-bind="prop" :tree-node="treeNode" :feed-back-list="feedBackList" is-check show-search key-code="id" @handleConfirm="handleConfirm" ></hyq-tree>
 	</view>
 </template>
 
