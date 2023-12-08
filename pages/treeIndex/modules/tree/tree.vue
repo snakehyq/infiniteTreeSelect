@@ -1,6 +1,6 @@
 <template>
   <view class="tree-node">
-    <search></search>
+    <search ref="searchRef" v-show="showSearch" @confirm="confirmSearch"></search>
     <scroll-view class="choose-toolbar" scroll-x="true" scroll-left="120">
       <view
         class="topics-item"
@@ -102,6 +102,7 @@ export default {
   props: {
     // 是否选中
     isCheck: Boolean,
+	showSearch: Boolean,
     // 数据的唯一标识
     keyCode: {
       type: String,
@@ -197,9 +198,37 @@ export default {
       // 当前选中的数据
       selectData: [],
       topics: [],
+	  searchResult: [],
+	  searchRef: null
     };
   },
   methods: {
+	  //搜索
+	  confirmSearch(val) {
+	  	this.searchResult = []
+	  	this.search(this.treeNode, val)
+	  	const topics = this.topics.slice(0,1)
+		topics.push({ [this.label]: "搜索结果", children: this.searchResult })
+	  	uni.showLoading({
+	  		title: '正在查找'
+	  	})
+		this.topics = topics
+	  	setTimeout(() => {
+	  		this.tree = this.searchResult
+	  		uni.hideLoading()
+	  	}, 300)
+	  },
+	  search(data, keyword) {
+	  	let {label,children} = this
+	  	for (var i = 0, len = data.length; i < len; i++) {
+	  		if (data[i][label].indexOf(keyword) >= 0) {
+	  			this.searchResult.push(data[i])
+	  		}
+	  		if (data[i][children] && data[i][children].length) {
+	  			this.search(data[i][children], keyword)
+	  		}
+	  	}
+	  },
     // 打开底部弹框
     selectOpen() {
       this.$refs.treePopup.open();
@@ -287,7 +316,7 @@ export default {
     handlePath() {
       if (this.hasPath) return [];
       const map = this.topics.map((_) => {
-        const topic = Object.assign({}, _);
+        const topic = Object.assign({}, _)
         delete topic[this.children];
         return topic;
       });
@@ -296,6 +325,9 @@ export default {
     // 点击tab
     handleTopic(index, topic) {
       console.log(index, topic);
+	  if(index ==0 ) {
+		  this.$refs.searchRef.clear()
+	  }
       if (!this.isActive(index)) return;
       // 同时删除index后的数据
       this.topics.splice(index + 1, this.topics.length);

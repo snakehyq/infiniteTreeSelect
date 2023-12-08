@@ -1,12 +1,29 @@
 <template>
 	<view class="search-tree">
 		<view class="search-box">
-			<input class="uni-input" confirm-type="search" placeholder="搜索" />
+			<input class="uni-input" v-model="inputValue" confirm-type="search" placeholder="搜索" @confirm="searchConfirm" />
 		</view>
 	</view>
 </template>
 
 <script>
+	export default {
+		name: "treeSearch",
+		data() {
+			return {
+				inputValue: ''
+			}
+		},
+		methods: {
+			searchConfirm(){
+				this.$emit('confirm', this.inputValue)
+			},
+			clear(){
+				console.log('清空了');
+				this.inputValue = ''
+			}
+		}
+	}
 </script>
 
 <style scoped>

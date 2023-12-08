@@ -1,6 +1,6 @@
 <template>
 	<view>
-		<infinite-tree v-bind="prop" :tree-node="treeNode" :feed-back-list="feedBackList" :is-check="true" key-code="id" @handleConfirm="handleConfirm" ></infinite-tree>
+		<infinite-tree v-bind="prop" :tree-node="treeNode" :feed-back-list="feedBackList" is-check show-search key-code="id" @handleConfirm="handleConfirm" ></infinite-tree>
 	</view>
 </template>
 
