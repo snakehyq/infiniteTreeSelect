@@ -1,17 +1,17 @@
 <template>
 	<view>
-		<infinite-tree v-bind="prop" :tree-node="treeNode" :feed-back-list="feedBackList" is-check show-search key-code="id" @handleConfirm="handleConfirm" ></infinite-tree>
+		<hyq-tree v-bind="prop" :tree-node="treeNode" :feed-back-list="feedBackList" is-check show-search key-code="id" @handleConfirm="handleConfirm" ></infinite-tree>
 	</view>
 </template>
 
 <script>
 	import {treeNode} from './data.js'
-	import infiniteTree from '../tree/tree'
+	import hyqTree from '../tree/tree'
 
 	export default {
 		name: 'choose',
 		components: {
-			infiniteTree
+			hyqTree
 		},
 		data(){
 			return {
