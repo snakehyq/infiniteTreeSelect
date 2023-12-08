@@ -1,17 +1,17 @@
 <template>
 	<view>
-		<hyq-tree v-bind="prop" :tree-node="treeNode" :feed-back-list="feedBackList" is-check show-search key-code="id" @handleConfirm="handleConfirm" ></hyq-tree>
+		<hyq-tree-vtw v-bind="prop" :tree-node="treeNode" :feed-back-list="feedBackList" is-check show-search key-code="id" @handleConfirm="handleConfirm" ></hyq-tree-vtw>
 	</view>
 </template>
 
 <script>
 	import {treeNode} from './data.js'
-	import hyqTree from '../tree/tree'
+	import hyqTreeVtw from '../tree/tree'
 
 	export default {
 		name: 'choose',
 		components: {
-			hyqTree
+			hyqTreeVtw
 		},
 		data(){
 			return {
