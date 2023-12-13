@@ -6,7 +6,7 @@
 		<button type="primary"  @tap="handleChooseTree(cprop)">单选模式（选择任意一项）</button>
 		<button type="primary" @tap="handleChooseTree(dprop)">单选模式（只选user）</button>
 		<button @tap="handleClear">清空选择</button>
-		<view v-for="(item,index) in selectData" style="padding: 12px;0px;">
+		<view v-for="(item,index) in selectData" style="padding: 12px;0px;" :key="item.id">
 			<view>名字： {{item.name}}</view>
 			<view>id： {{item.id}}</view>
 			<view v-show="item.path.length">
@@ -26,6 +26,7 @@
 				aprop: {
 					label: 'name',
 					children: 'children',
+					keyCode: 'id',
 					multiple:true,
 					hasPath:false
 				},
@@ -33,12 +34,14 @@
 					label: 'name',
 					children: 'children',
 					multiple:true,
+					keyCode: 'id',
 					checkStrictly:true,
 					hasPath:false
 				},
 				cprop: {//单选模式(任意一项)
 					label: 'name',
 					children: 'children',
+					keyCode: 'id',
 					multiple:false,
 					nodes:false,
 					hasPath:false
@@ -46,6 +49,7 @@
 				dprop: {//单选模式选user
 					label: 'name',
 					children: 'children',
+					keyCode: 'id',
 					multiple:false,
 					nodes:true,
 					hasPath:false

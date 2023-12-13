@@ -2,11 +2,14 @@
 	<uni-popup ref="popup" type="bottom">
 		<view class="tree-list">
 			<view class="tree-list-title">
-				<text>已选择：{{selectData.length}}人</text>
-				<text @tap="close()" class="confrim">确认</text>
+				<text>已选择：{{value.length}}人</text>
+				<view class="">
+					<text @tap="allClear()" class="all-clear">全部移除</text>
+					<text @tap="close()" class="confrim">确认</text>
+				</view>
 			</view>
 			<scroll-view scroll-top="0" scroll-y="true" class="scroll-Y">
-				<view class="tree-list-item" v-for="(item,index) in selectData" :key="index">
+				<view class="tree-list-item" v-for="(item,index) in value" :key="index">
 					<text>{{item.name}}</text>
 					<text class="clear-btn" @tap="treeNodeClear(index)">移除</text>
 				</view>
@@ -19,7 +22,7 @@
 	export default {
 		name: 'treePopup',
 		props: {
-			selectData: {
+			value: {
 				type: Array,
 				default: () => []
 			}
@@ -30,10 +33,18 @@
 			}
 		},
 		methods: {
+			allClear(){
+				for (let i = 0; i < this.value.length; i++) {
+					const v = this.value[i]
+					v.checked = false
+					v.halfChecked = false
+				}
+				this.$emit('input', [])
+			},
 			treeNodeClear(index){
-				this.selectData[index].checked = false
-				this.selectData[index].halfChecked = false
-				this.selectData.splice(index,1)
+				this.value[index].checked = false
+				this.value[index].halfChecked = false
+				this.value.splice(index,1)
 			},
 			open() {
 				this.$refs.popup.open()
@@ -47,7 +58,7 @@
 
 <style scoped >
 	.scroll-Y {
-		height: 500px;
+		height: calc(60vh);
 	}
 	.tree-list {
 		background-color: #fff;
@@ -63,6 +74,11 @@
 		padding-top: 12px;
 		padding-bottom: 12px;
 		border-bottom: 1px solid #e4e1e1;
+	}
+	.tree-list-title .all-clear {
+		color: rgba(0, 0, 0, 0.4);
+		cursor: pointer;
+		margin-right: 10px;
 	}
 	.tree-list-title .confrim {
 		color: #529edb;

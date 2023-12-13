@@ -1,52 +1,68 @@
 <template>
 	<view class="content">
-		<image class="logo" src="/static/logo.png"></image>
-		<view class="text-area">
-			<text class="title">{{title}}</text>
-		</view>
+		<hyq-tree-vtw :label="dprop.label" :children="dprop.children" :key-code="dprop.keyCode"
+			:has-path="dprop.hasPath" :nodes="dprop.nodes" :multiple="dprop.multiple"
+			:checkStrictly="dprop.checkStrictly" :tree-node="treeNode" :feed-back-list="feedBackList" is-check
+			show-search @handleConfirm="handleConfirm"></hyq-tree-vtw>
 	</view>
 </template>
 
 <script>
+	import {
+		treeNode
+	} from './data.js'
 	export default {
 		data() {
 			return {
-				title: 'Hello'
+				treeNode,
+				feedBackList: [],
+				aprop: {
+					label: 'name',
+					children: 'children',
+					keyCode: 'id',
+					multiple: true,
+					hasPath: false
+				},
+				bprop: {
+					label: 'name',
+					children: 'children',
+					keyCode: 'id',
+					multiple: true,
+					checkStrictly: true,
+					hasPath: false
+				},
+				cprop: { //单选模式(任意一项)
+					label: 'name',
+					children: 'children',
+					keyCode: 'id',
+					multiple: false,
+					nodes: false,
+					hasPath: false
+				},
+				dprop: { //单选模式选user
+					label: 'name',
+					children: 'children',
+					keyCode: 'id',
+					multiple: false,
+					nodes: true,
+					hasPath: false
+				}
 			}
 		},
 		onLoad() {
 
 		},
 		methods: {
-
+			handleConfirm(val) {
+				console.log('val', val);
+				// 获取上一个页面
+				var pages = getCurrentPages(); //当前页面栈
+				var beforePage = pages[pages.length - 2]; //获取上一个页面实例对象
+				beforePage.$vm.setConfirmData(val); //触发上一个页面中的update方法
+			}
 		}
 	}
 </script>
 
 <style>
-	.content {
-		display: flex;
-		flex-direction: column;
-		align-items: center;
-		justify-content: center;
-	}
-
-	.logo {
-		height: 200rpx;
-		width: 200rpx;
-		margin-top: 200rpx;
-		margin-left: auto;
-		margin-right: auto;
-		margin-bottom: 50rpx;
-	}
-
-	.text-area {
-		display: flex;
-		justify-content: center;
-	}
-
-	.title {
-		font-size: 36rpx;
-		color: #8f8f94;
-	}
 </style>

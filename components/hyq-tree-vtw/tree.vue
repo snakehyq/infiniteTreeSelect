@@ -1,14 +1,14 @@
 <template>
   <view class="tree-node">
-    <search ref="searchRef" v-show="showSearch" @confirm="confirmSearch"></search>
+    <hyq-tree-search> ref="searchRef" v-show="showSearch" @confirm="confirmSearch"></hyq-tree-search>
     <scroll-view class="choose-toolbar" scroll-x="true" scroll-left="120">
       <view
         class="topics-item"
         v-for="(top, index) in topics"
-        :key="index + 'topics-item'"
+        :key="index"
         @tap="handleTopic(index, top)"
       >
-        <i v-show="index !== 0" class="iconfont icon-z043 iconclass"></i>
+        <i v-if="index !== 0" class="iconfont icon-z043 iconclass"></i>
         <text :class="isActive(index) ? 'topics-item-active' : ''">{{
           top[label]
         }}</text>
@@ -19,7 +19,7 @@
       <view
         class="node-list-item"
         v-for="(nodeItem, index) in tree"
-        :key="index + 'node-list-item'"
+        :key="nodeItem[keyCode]"
         @tap="handleTreeNode(nodeItem, index)"
       >
         <view class="item-left">
@@ -67,7 +67,7 @@
         </view>
         <view
           class="item-right"
-          v-show="nodeItem[children] && nodeItem[children].length"
+          v-if="nodeItem[children] && nodeItem[children].length"
         >
           <i class="iconfont icon-z043 iconclass" />
         </view>
@@ -77,7 +77,7 @@
       <view class="footer-left">
         <view class="select">
           已选择：
-          <text v-show="selectData.length" @tap="selectOpen">
+          <text v-if="selectData.length" @tap="selectOpen">
             {{ selectData.length }}个
             <text class="select-row">^</text>
           </text>
@@ -86,18 +86,18 @@
       </view>
       <view class="footer-right" @tap="handleConfirm"> 完成 </view>
     </view>
-    <tree-popup ref="treePopup" :selectData="selectData"></tree-popup>
+    <hyq-tree-popup ref="treePopup" v-model="selectData"></hyq-tree-popup>
   </view>
 </template>
 
 <script>
-import search from "../search/search";
-import treePopup from '../tree-Popup/tree-Popup.vue'
+import hyqTreeSearch from "@/components/hyq-tree-search/hyq-tree-search.vue";
+import hyqTreePopup from '@/components/hyq-tree-popup/hyq-tree-popup.vue'
 export default {
   name: "tree",
   components: {
-    search,
-	treePopup
+    hyqTreeSearch,
+	hyqTreePopup
   },
   props: {
     // 是否选中
@@ -111,10 +111,6 @@ export default {
     treeNode: {
       type: Array,
       default: () => [],
-    },
-    number: {
-      type: Number,
-      default: 1,
     },
     // 名字字段label
     label: {
@@ -181,7 +177,7 @@ export default {
   // 		immediate: true
   // 	}
   // },
-  created() {
+  mounted() {
     // 空数组表示初始化 init()
     if (!this.feedBackList.length) return this.init();
     let index = this.feedBackList.length - 1;
@@ -305,6 +301,7 @@ export default {
     },
     // 初始化数据
     init() {
+		console.log('this.label',this.label);
       this.topics = [{ [this.label]: "全部", children: this.treeNode }];
       this.tree = Object.freeze(this.treeNode);
     },
@@ -505,6 +502,6 @@ export default {
 </script>
 
 <style scoped lang="scss">
-@import "../css/style.scss";
-@import url("../css/icon.css");
+@import "./css/style.scss";
+@import url("./css/icon.css");
 </style>
