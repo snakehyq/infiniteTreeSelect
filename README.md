@@ -24,7 +24,7 @@
 ![image-20230918170303436](https://github.com/snakehyq/infiniteTreeSelect/blob/main/static/imags/image-20230918170303436.png)
 
 ## 已选择数据弹框
-![image-20230918170303436](https://github.com/snakehyq/infiniteTreeSelect/blob/main/static/imags/image-1695286886689.png)
+![image-20230918170303436](https://github.com/snakehyq/infiniteTreeSelect/blob/main/static/imags/image-1695286886689.jpg)
 
 ## 说明
 
@@ -71,6 +71,35 @@
 	}
 </script>
 ```
+
+## 传入的数据结构说明-treeNode
+
+```js
+[
+    {
+        id: 664214366998,
+        name: "校长443",
+        children: [{
+            id: 885655454545454545678,
+            name: "小陆"
+        }]
+    },
+]
+```
+
+## 选中返回的结果feedBackList：返回一个二维数组
+
+```js
+[
+    {
+        id: xxx,
+        name: "xxx",
+        path:[],//该值的路径
+    },
+]
+```
+
+
 
 ## 功能说明
 
