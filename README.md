@@ -28,7 +28,7 @@
 
 ## 说明
 
-- 本插件需要使用uni-popup、uni-transition用于已选择数据弹框，因此需要有这些依赖
+- 本插件需要使用uni-popup、uni-transition用于已选择数据弹框，因此需要有这些依赖,请自行导入
 - 本人只在微信小程序端和H5 使用Chrome浏览器测试和微信开发者工具
 
 ## 安装方式
@@ -148,3 +148,7 @@
 # github源码地址
 
 [github](https://github.com/snakehyq/infiniteTreeSelect)
+
+## vue3版本
+
+[点击地址](https://ext.dcloud.net.cn/plugin?id=15785)
