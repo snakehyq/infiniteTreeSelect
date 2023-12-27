@@ -9,11 +9,9 @@
 
 ![image-20230918170138002](https://github.com/snakehyq/infiniteTreeSelect/blob/main/static/imags/image-20230918170138002.png)
 
-## 单选默认-任意一项
+## 单选-任意一项
 
 ![image-20230918170206345](https://github.com/snakehyq/infiniteTreeSelect/blob/main/static/imags/image-20230918170206345.png)
-
-
 
 ## 多选-关联下级
 
@@ -26,9 +24,14 @@
 ## 已选择数据弹框
 ![image-20230918170303436](https://github.com/snakehyq/infiniteTreeSelect/blob/main/static/imags/image-1695286886689.jpg)
 
+## 单选-任意一项
+
+![单选任意选择](https://img-blog.csdnimg.cn/direct/6f9fdbd2fdd245139919eb7bba17275f.png#pic_center)
+
 ## 说明
 
 - 本插件需要使用uni-popup、uni-transition用于已选择数据弹框，因此需要有这些依赖,请自行导入
+- 本插件基于【虚拟列表】高性能渲染海量数据，动态高度、缓冲
 - 本人只在微信小程序端和H5 使用Chrome浏览器测试和微信开发者工具
 
 ## 安装方式
@@ -71,6 +74,111 @@
 	}
 </script>
 ```
+
+## dat.js 数据生成
+
+```js
+const treeNode = [{
+		name: '一级',
+		id: '1',
+		user: false,
+		children: [{
+				name: '二级-1',
+				id: '2-1',
+				user: false,
+				children: [{
+						name: '三级-1',
+						id: '3-1',
+						user: false,
+						children: [{
+								name: '四级-1',
+								id: '4-1',
+								user: false,
+								children: [{
+										name: '五级-1',
+										id: '5-1',
+										user: false,
+										children: [{
+												name: '六级-1',
+												id: '6-1',
+												user: true,
+												children: [
+
+												]
+											},
+											...makeTreeNode(5)
+										]
+									},
+									...makeTreeNode(4)
+								]
+							},
+							...makeTreeNode(3)
+						]
+					},
+					...makeTreeNode(2)
+				],
+			},
+			...makeTreeNode(1)
+		]
+	},
+	{
+		name: '一级-2',
+		id: '1-1-1',
+		user: false,
+		children: [{
+				name: '1-二级-1',
+				id: '1-6-1665',
+				user: false,
+				children: [{
+						name: '1-三级-1',
+						id: '1-5-1',
+						user: false,
+						children: [{
+								name: '1-四级-1',
+								id: '1-6-166',
+								user: true,
+								children: [
+									...makeTreeNode('1-四级-1')
+								]
+							},
+							...makeTreeNode('1-三级-1')
+						]
+					},
+					...makeTreeNode('2-1')
+				]
+			},
+			...makeTreeNode('1-1')
+		]
+	},
+]
+
+function makeTreeNode(leval) {
+	let treeNoneList = []
+	for (let k = 0; k < 100; k++) {
+		let name = `${leval}级-${k}`
+		treeNoneList.push({
+			name,
+			id: guid(),
+			user: true
+		})
+	}
+	return treeNoneList
+}
+
+function guid() {
+	function S4() {
+		return (((1 + Math.random()) * 0x10000) | 0).toString(16).substring(1);
+	}
+	return (S4() + S4() + "-" + S4() + "-" + S4() + "-" + S4() + "-" + S4() + S4() + S4());
+}
+
+export {
+	treeNode
+};
+
+```
+
+
 
 ## 传入的数据结构说明-treeNode
 
@@ -131,17 +239,209 @@
 
 ## 事件
 
-| 事件名         | 说明                   | 返回值             |
-| -------------- | ---------------------- | ------------------ |
-| @handleConfirm | 点击完成按钮时触发事件 | 参数（选中的项值） |
+| 事件名         | 说明                   | 返回值                 |
+| -------------- | ---------------------- | ---------------------- |
+| @handleConfirm | 点击完成按钮时触发事件 | 参数（选中的项值）     |
+| @confirmSearch | 搜索完成后触发事件     | 参数（搜索结果的项值） |
 
 ## 单选模式（只选user）
 
+```js
+<template>
+	<view class="content">
+		<hyq-tree-vtw :label="dprop.label" :children="dprop.children" :key-code="dprop.keyCode"
+			:has-path="dprop.hasPath" :nodes="dprop.nodes" :multiple="dprop.multiple"
+			:checkStrictly="dprop.checkStrictly" :tree-node="treeNode" :feed-back-list="feedBackList" is-check
+			show-search @handleConfirm="handleConfirm"></hyq-tree-vtw>
+	</view>
+</template>
+
+<script>
+	import {
+		treeNode
+	} from './data.js'
+	export default {
+		data() {
+			return {
+				treeNode,
+				feedBackList: [],
+				dprop: { //单选模式选user
+					label: 'name',
+					children: 'children',
+					keyCode: 'id',
+					multiple: false,
+					nodes: true,
+					hasPath: false
+				}
+			}
+		},
+		onLoad() {
+
+		},
+		methods: {
+			handleConfirm(val) {
+				console.log('val', val);
+				// 获取上一个页面
+				var pages = getCurrentPages(); //当前页面栈
+				var beforePage = pages[pages.length - 2]; //获取上一个页面实例对象
+				beforePage.$vm.setConfirmData(val); //触发上一个页面中的update方法
+			}
+		}
+	}
+</script>
+
+<style>
+</style>
+```
+
 ## 单选模式（选择任意一项）
+
+```js
+<template>
+	<view class="content">
+		<hyq-tree-vtw :label="cprop.label" :children="cprop.children" :key-code="cprop.keyCode"
+			:has-path="cprop.hasPath" :nodes="cprop.nodes" :multiple="cprop.multiple"
+			:checkStrictly="cprop.checkStrictly" :tree-node="treeNode" :feed-back-list="feedBackList" is-check
+			show-search @handleConfirm="handleConfirm"></hyq-tree-vtw>
+	</view>
+</template>
+
+<script>
+	import {
+		treeNode
+	} from './data.js'
+	export default {
+		data() {
+			return {
+				treeNode,
+				feedBackList: [],
+				cprop: { //单选模式(任意一项)
+					label: 'name',
+					children: 'children',
+					keyCode: 'id',
+					multiple: false,
+					nodes: false,
+					hasPath: false
+				}
+			}
+		},
+		onLoad() {
+
+		},
+		methods: {
+			handleConfirm(val) {
+				console.log('val', val);
+				// 获取上一个页面
+				var pages = getCurrentPages(); //当前页面栈
+				var beforePage = pages[pages.length - 2]; //获取上一个页面实例对象
+				beforePage.$vm.setConfirmData(val); //触发上一个页面中的update方法
+			}
+		}
+	}
+</script>
+
+<style>
+</style>
+```
 
 ## 多选模式（关联下级）
 
+```js
+<template>
+	<view class="content">
+		<hyq-tree-vtw :label="bprop.label" :children="bprop.children" :key-code="bprop.keyCode"
+			:has-path="bprop.hasPath" :nodes="bprop.nodes" :multiple="bprop.multiple"
+			:checkStrictly="bprop.checkStrictly" :tree-node="treeNode" :feed-back-list="feedBackList" is-check
+			show-search @handleConfirm="handleConfirm"></hyq-tree-vtw>
+	</view>
+</template>
+
+<script>
+	import {
+		treeNode
+	} from './data.js'
+	export default {
+		data() {
+			return {
+				treeNode,
+				feedBackList: [],
+				bprop: {
+					label: 'name',
+					children: 'children',
+					keyCode: 'id',
+					multiple: true,
+					checkStrictly: true,
+					hasPath: false
+				}
+			}
+		},
+		onLoad() {
+
+		},
+		methods: {
+			handleConfirm(val) {
+				console.log('val', val);
+				// 获取上一个页面
+				var pages = getCurrentPages(); //当前页面栈
+				var beforePage = pages[pages.length - 2]; //获取上一个页面实例对象
+				beforePage.$vm.setConfirmData(val); //触发上一个页面中的update方法
+			}
+		}
+	}
+</script>
+
+<style>
+</style>
+```
+
 ## 多选模式（选择任意一项）
+
+```js
+<template>
+	<view class="content">
+		<hyq-tree-vtw :label="aprop.label" :children="aprop.children" :key-code="aprop.keyCode"
+			:has-path="aprop.hasPath" :nodes="aprop.nodes" :multiple="aprop.multiple"
+			:checkStrictly="aprop.checkStrictly" :tree-node="treeNode" :feed-back-list="feedBackList" is-check
+			show-search @handleConfirm="handleConfirm"></hyq-tree-vtw>
+	</view>
+</template>
+
+<script>
+	import {
+		treeNode
+	} from './data.js'
+	export default {
+		data() {
+			return {
+				treeNode,
+				feedBackList: [],
+				aprop: {
+					label: 'name',
+					children: 'children',
+					keyCode: 'id',
+					multiple: true,
+					hasPath: false
+				}
+			}
+		},
+		onLoad() {
+
+		},
+		methods: {
+			handleConfirm(val) {
+				console.log('val', val);
+				// 获取上一个页面
+				var pages = getCurrentPages(); //当前页面栈
+				var beforePage = pages[pages.length - 2]; //获取上一个页面实例对象
+				beforePage.$vm.setConfirmData(val); //触发上一个页面中的update方法
+			}
+		}
+	}
+</script>
+
+<style>
+</style>
+```
 
 
 
