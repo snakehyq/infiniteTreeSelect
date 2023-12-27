@@ -1,32 +1,28 @@
 # hyq-tree-vtw
 无限极树形结构面包屑、单选-多选、搜索、移除功能
 
-## 首页
+## 示例项目
 
-![image-20230918170058899](https://github.com/snakehyq/infiniteTreeSelect/blob/main/static/imags/image-20230918170058899.png)
+![示例项目](https://img-blog.csdnimg.cn/direct/4ba84d793df345fcb5dba7c3d8c11040.png#pic_center)
 
 ## 单选-user
 
-![image-20230918170138002](https://github.com/snakehyq/infiniteTreeSelect/blob/main/static/imags/image-20230918170138002.png)
-
-## 单选-任意一项
-
-![image-20230918170206345](https://github.com/snakehyq/infiniteTreeSelect/blob/main/static/imags/image-20230918170206345.png)
-
-## 多选-关联下级
-
-![image-20230918170231896](https://github.com/snakehyq/infiniteTreeSelect/blob/main/static/imags/image-20230918170231896.png)
-
-## 多选-任意一项
-
-![image-20230918170303436](https://github.com/snakehyq/infiniteTreeSelect/blob/main/static/imags/image-20230918170303436.png)
-
-## 已选择数据弹框
-![image-20230918170303436](https://github.com/snakehyq/infiniteTreeSelect/blob/main/static/imags/image-1695286886689.jpg)
+![单选只选user](https://img-blog.csdnimg.cn/direct/ffadcf4f93c64a3abc1312808d8fb79d.png#pic_center)
 
 ## 单选-任意一项
 
 ![单选任意选择](https://img-blog.csdnimg.cn/direct/6f9fdbd2fdd245139919eb7bba17275f.png#pic_center)
+
+## 多选-关联下级
+
+![多选关联下级](https://img-blog.csdnimg.cn/direct/d0aedc93eef147a6930298d3db8e27e4.png#pic_center)
+
+## 多选-任意一项
+
+![多选任选一级](https://img-blog.csdnimg.cn/direct/1647bc2c9000435d86f0186dc777e52f.png#pic_center)
+
+## 已选择数据弹框
+![已选数据](https://img-blog.csdnimg.cn/direct/c31b996fec83438abbb75b359b7dd48f.jpeg#pic_center)
 
 ## 说明
 

@@ -2,7 +2,7 @@
 	<view>
 		<hyq-tree-vtw :label="prop.label" :children="prop.children" :key-code="prop.keyCode" :has-path="prop.hasPath"
 			:nodes="prop.nodes" :multiple="prop.multiple" :checkStrictly="prop.checkStrictly" :tree-node="treeNode"
-			:feed-back-list="feedBackList" is-check show-search @handleConfirm="handleConfirm"></hyq-tree-vtw>
+			:feed-back-list="feedBackList" is-check  show-search @handleConfirm="handleConfirm" @confirmSearch="confirmSearch"></hyq-tree-vtw>
 	</view>
 </template>
 
@@ -44,6 +44,9 @@
 				var pages = getCurrentPages(); //当前页面栈
 				var beforePage = pages[pages.length - 2]; //获取上一个页面实例对象
 				beforePage.$vm.setConfirmData(val); //触发上一个页面中的update方法
+			},
+			confirmSearch(val){
+				console.log('val', val);
 			}
 		}
 	}

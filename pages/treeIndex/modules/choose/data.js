@@ -75,8 +75,9 @@ const treeNode = [{
 function makeTreeNode(leval) {
 	let treeNoneList = []
 	for (let k = 0; k < 100; k++) {
+		let name = `${leval}级-${k}`
 		treeNoneList.push({
-			name: `${leval}级-${k}`,
+			name,
 			id: guid(),
 			user: true
 		})

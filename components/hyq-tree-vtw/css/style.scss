@@ -2,6 +2,19 @@
     display: none;
   }
 
+.infinite-list-container {
+  overflow: auto;
+  position: relative;
+  -webkit-overflow-scrolling: touch;
+}
+
+.infinite-list-phantom {
+  position: absolute;
+  left: 0;
+  top: 0;
+  right: 0;
+  z-index: -1;
+}
 .tree-node {
 	.icons{
 		color: #0095F2!important;
@@ -33,6 +46,13 @@
 			}
 		}
 	}
+	.tree-node-list {
+		padding-bottom: 44px;
+		left: 0;
+		right: 0;
+		top: 0;
+		position: absolute;
+	}
 	.node-list-item {
 		padding: 10px 15px;
 		font-size: 14px;
@@ -52,6 +72,11 @@
 					font-size: 20px;
 				}
 			}
+		}
+		.item-right {
+			display: flex;
+			align-items: center;
+			justify-content: center;
 		}
 	}
 
