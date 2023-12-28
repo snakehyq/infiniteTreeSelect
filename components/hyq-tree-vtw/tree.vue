@@ -1,6 +1,6 @@
 <template>
 	<view class="tree-node">
-		<hyq-tree-search ref="searchRef" v-show="showSearch" @confirm="confirmSearch"></hyq-tree-search>
+		<hyq-tree-vtw-search ref="searchRef" v-show="showSearch" @confirm="confirmSearch"></hyq-tree-vtw-search>
 		<scroll-view class="choose-toolbar" scroll-x="true" scroll-left="120">
 			<view class="topics-item" v-for="(top, index) in topics" :key="index" @tap="handleTopic(index, top)">
 				<i v-if="index !== 0" class="iconfont icon-z043 iconclass"></i>
@@ -59,18 +59,18 @@
 			</view>
 			<view class="footer-right" @tap="handleConfirm"> 完成 </view>
 		</view>
-		<hyq-tree-popup ref="treePopup" v-model="selectData"></hyq-tree-popup>
+		<hyq-tree-vtw-popup ref="treePopup" v-model="selectData"></hyq-tree-vtw-popup>
 	</view>
 </template>
 
 <script>
-	import hyqTreeSearch from "@/components/hyq-tree-search/hyq-tree-search.vue";
-	import hyqTreePopup from '@/components/hyq-tree-popup/hyq-tree-popup.vue'
+	import hyqTreeVtwSearch from "@/components/hyq-tree-vtw-search/hyq-tree-vtw-search.vue";
+	import hyqTreeVtwPopup from '@/components/hyq-tree-vtw-popup/hyq-tree-vtw-popup.vue'
 	export default {
 		name: "tree",
 		components: {
-			hyqTreeSearch,
-			hyqTreePopup
+			hyqTreeVtwSearch,
+			hyqTreeVtwPopup
 		},
 		props: {
 			// 是否选中
