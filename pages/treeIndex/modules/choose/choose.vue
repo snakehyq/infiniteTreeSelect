@@ -10,7 +10,7 @@
 	import {
 		treeNode
 	} from './data.js'
-	import hyqTreeVtw from '@/components/hyq-tree-vtw/tree.vue'
+	import hyqTreeVtw from '@/components/hyq-tree-vtw/hyq-tree-vtw.vue'
 
 	export default {
 		name: 'choose',

@@ -413,6 +413,7 @@
 				this.topics = topics
 				setTimeout(() => {
 					this.tree = this.searchResult
+					this.positions = this.initPotions(this.tree)
 					uni.hideLoading()
 					this.$emit('confirmSearch', [...this.searchResult])
 				}, 300)
